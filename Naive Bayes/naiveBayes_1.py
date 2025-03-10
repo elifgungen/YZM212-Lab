@@ -9,7 +9,6 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 train_df = pd.read_csv("train_data.csv")
 test_df = pd.read_csv("test_data.csv")
 
-# 2. Özellik ve Hedef Seçimi (Veri setinizin Gaussian dağılıma uygun olduğu varsayılmıştır)
 X_train = train_df.drop(columns=['deposit']).to_numpy()
 y_train = train_df['deposit'].to_numpy()
 X_test = test_df.drop(columns=['deposit']).to_numpy()
