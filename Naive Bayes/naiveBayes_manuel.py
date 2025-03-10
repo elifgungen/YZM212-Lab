@@ -25,7 +25,6 @@ class CustomGaussianNB:
 
     def fit(self, X, y):
         self.classes = np.unique(y)
-        # İlk adımda, her sınıf için ortalama ve varyansı hesapla, varyansları ayrı ayrı sakla.
         all_vars = []
         for c in self.classes:
             X_c = X[y == c]
@@ -33,11 +32,10 @@ class CustomGaussianNB:
             self.means[c] = X_c.mean(axis=0)
             var = X_c.var(axis=0)
             all_vars.append(var)
-            self.vars[c] = var  # ε eklenmeden önce geçici olarak saklanıyor.
-        # Tüm sınıfların varyanslarından global maksimumu bul
+            self.vars[c] = var 
         max_var = np.max(np.concatenate(all_vars))
         epsilon = self.var_smoothing * max_var
-        # Her sınıfın varyansına ortak ε ekle
+        
         for c in self.classes:
             self.vars[c] = self.vars[c] + epsilon
 
@@ -46,7 +44,7 @@ class CustomGaussianNB:
         for i in range(X.shape[0]):
             posteriors = []
             for c in self.classes:
-                # Log prior hesaplaması
+                
                 log_prior = np.log(self.priors[c])
                 # Gaussian log olasılık yoğunluk fonksiyonu:
                 # log P(x|c) = -0.5 * log(2*pi*var) - ((x - mean)^2)/(2*var)
