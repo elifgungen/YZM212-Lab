@@ -1,10 +1,8 @@
-# 📌 Gerekli Kütüphaneler
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-# 📌 1. Veri Setlerini Yükleme
 train_df = pd.read_csv("telco_churn_train.csv")
 test_df = pd.read_csv("telco_churn_test.csv")
 
@@ -15,7 +13,6 @@ X_test = test_df.drop(columns=['Churn']).values
 y_test = test_df['Churn'].values.reshape(-1, 1)
 
 
-# 📌 2. Logistic Regression Fonksiyonları
 class LogisticRegressionManual:
     def __init__(self, lr=0.001, epochs=10000):
         self.lr = lr
@@ -45,7 +42,6 @@ class LogisticRegressionManual:
         return np.where(a >= 0.5, 1, 0)
 
 
-# 📌 3. Model Eğitimi
 model = LogisticRegressionManual(lr=0.01, epochs=5000)
 
 start_train = time.time()
@@ -54,13 +50,11 @@ train_time = time.time() - start_train
 
 print(f"Model eğitim süresi: {train_time:.4f} saniye")
 
-# 📌 4. Tahmin Yapma
 start_test = time.time()
 y_pred = model.predict(X_test)
 test_time = time.time() - start_test
 print(f"Tahmin süresi: {test_time:.4f} saniye")
 
-# 📌 5. Performans Değerlendirme
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, \
     classification_report
 
@@ -75,16 +69,13 @@ print(f"Hassasiyet (Precision): {precision:.4f}")
 print(f"Duyarlılık (Recall): {recall:.4f}")
 print(f"F1 Skoru: {f1:.4f}")
 
-# Sınıflandırma raporu
 print("\nSınıflandırma Raporu:")
 print(classification_report(y_test, y_pred))
 
-# Karmaşıklık matrisini oluşturma
 cm = confusion_matrix(y_test, y_pred)
 print("\nKarmaşıklık Matrisi:")
 print(cm)
 
-# Karmaşıklık matrisini görselleştirme
 plt.figure(figsize=(6, 5))
 plt.imshow(cm, cmap='Oranges', alpha=0.7)
 plt.colorbar()
